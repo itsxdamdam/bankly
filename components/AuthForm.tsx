@@ -27,9 +27,11 @@ const AuthForm = ({ type }: { type: string }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const formSchema = authFormSchema(type);
+
   // Define your form
-  const form = useForm<z.infer<typeof authFormSchema>>({
-    resolver: zodResolver(authFormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -37,7 +39,7 @@ const AuthForm = ({ type }: { type: string }) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof authFormSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsLoading(true);
@@ -78,6 +80,59 @@ const AuthForm = ({ type }: { type: string }) => {
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {type === "sign-up" && (
+                <>
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="firstName"
+                      control={form.control}
+                      label="First Name"
+                      placeholder="Enter your First Name"
+                    />
+                    <CustomInput
+                      name="lastName"
+                      control={form.control}
+                      label="Last Name"
+                      placeholder="Enter your Last Name"
+                    />
+                  </div>
+
+                  <CustomInput
+                    name="address1"
+                    control={form.control}
+                    label="Address"
+                    placeholder="Enter your specific Address"
+                  />
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="state"
+                      control={form.control}
+                      label="State"
+                      placeholder="Example: Lagos"
+                    />
+                    <CustomInput
+                      name="postalCode"
+                      control={form.control}
+                      label="Postal Code"
+                      placeholder="Example: 100222"
+                    />
+                  </div>
+                  <div className="flex gap-4">
+                    <CustomInput
+                      name="dateOfBirth"
+                      control={form.control}
+                      label="Date of Birth"
+                      placeholder="YYYY-MM-DD"
+                    />
+                    <CustomInput
+                      name="ssn"
+                      control={form.control}
+                      label="SSN"
+                      placeholder="Example: 2344"
+                    />
+                  </div>
+                </>
+              )}
               <CustomInput
                 name="email"
                 control={form.control}
