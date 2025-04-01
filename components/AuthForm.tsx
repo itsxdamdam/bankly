@@ -39,13 +39,29 @@ const AuthForm = ({ type }: { type: string }) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log(values);
-    setIsLoading(false);
-  }
+
+    // Do something with the form values.
+    try {
+      // sign up with Appwrite and create plaid token
+      if(type === "sign-up") {
+        const userData = {
+          firstName: data.firstName
+        }
+      }
+
+      if(type === "sign-in") {
+
+      }
+      console.log(values);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+    // ✅ This will be type-safe and validated.
+  };
 
   return (
     <section className="auth-form">
@@ -102,6 +118,13 @@ const AuthForm = ({ type }: { type: string }) => {
                     control={form.control}
                     label="Address"
                     placeholder="Enter your specific Address"
+                  />
+                  
+                  <CustomInput
+                    name="city"
+                    control={form.control}
+                    label="City"
+                    placeholder="Enter your specific City"
                   />
                   <div className="flex gap-4">
                     <CustomInput
