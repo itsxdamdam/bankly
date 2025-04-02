@@ -11,19 +11,16 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import { signIn, signUp } from "@/lib/actions/user.actions";
+import { useRouter } from "next/navigation";
 
 const AuthForm = ({ type }: { type: string }) => {
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,16 +42,19 @@ const AuthForm = ({ type }: { type: string }) => {
     // Do something with the form values.
     try {
       // sign up with Appwrite and create plaid token
-      if(type === "sign-up") {
-        const userData = {
-          firstName: data.firstName
-        }
+      if (type === "sign-up") {
+        const newUser = await signUp(data);
+        setUser(newUser);
       }
 
-      if(type === "sign-in") {
-
+      if (type === "sign-in") {
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+        if (response) router.push("/");
       }
-      console.log(values);
+      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -119,7 +119,7 @@ const AuthForm = ({ type }: { type: string }) => {
                     label="Address"
                     placeholder="Enter your specific Address"
                   />
-                  
+
                   <CustomInput
                     name="city"
                     control={form.control}
