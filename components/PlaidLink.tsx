@@ -6,7 +6,10 @@ import {
   PlaidLinkOptions,
   usePlaidLink,
 } from "react-plaid-link";
-import { createLinkToken, exchangePublicToken } from "@/lib/actions/user.actions";
+import {
+  createLinkToken,
+  exchangePublicToken,
+} from "@/lib/actions/user.actions";
 
 const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   const router = useRouter();
@@ -18,6 +21,7 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
       setToken(data?.linkToken);
     };
 
+    console.log("gettttttttttttheeeeeeeere");
     getLinkToken();
   }, [user]);
 

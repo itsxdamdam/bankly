@@ -43,8 +43,6 @@ export const signIn = async ({ email, password }: signInProps) => {
 
     const session = await account.createEmailPasswordSession(email, password);
 
-    console.log("before session");
-
     cookies().set("appwrite-session", session.secret, {
       path: "/",
       httpOnly: true,
@@ -144,9 +142,9 @@ export const createLinkToken = async (user: User) => {
         client_user_id: user.$id,
       },
       client_name: `${user.firstName} ${user.lastName}`,
-      products: ["auth"] as Products[],
+      products: ["auth", "transactions", "identity"] as Products[],
       language: "en",
-      country_codes: ["US"] as CountryCode[],
+      country_codes: ["US", "ES"] as CountryCode[],
     };
 
     const response = await plaidClient.linkTokenCreate(tokenParams);
@@ -230,7 +228,7 @@ export const exchangePublicToken = async ({
     // If the funding source url is not created, throw an error
     if (!fundingSourceUrl) throw Error;
 
-    // Create a bank account using the user ID, item ID, account ID, access token, funding source URL, and sharable ID
+    // Create a bank account using the user ID, item ID, account ID, access token, funding source URL, and shareable ID
     await createBankAccount({
       userId: user.$id,
       bankId: itemId,
@@ -281,5 +279,27 @@ export const getBank = async ({ documentId }: getBankProps) => {
     return parseStringify(bank.documents[0]);
   } catch (error) {
     console.log(error);
+  }
+};
+
+// get specific bank from bank collection by account id
+export const getBankByAccountId = async ({
+  accountId,
+}: getBankByAccountIdProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const bank = await database.listDocuments(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      [Query.equal("accountId", [accountId])]
+    );
+
+    if (bank.total !== 1) return null;
+
+    return parseStringify(bank.documents[0]);
+  } catch (error) {
+    console.error("Error", error);
+    return null;
   }
 };

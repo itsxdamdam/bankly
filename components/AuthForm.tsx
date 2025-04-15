@@ -67,7 +67,6 @@ const AuthForm = ({ type }: { type: string }) => {
         });
         if (response) router.push("/");
       }
-      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -152,7 +151,7 @@ const AuthForm = ({ type }: { type: string }) => {
                       name="postalCode"
                       control={form.control}
                       label="Postal Code"
-                      placeholder="Example: 100222"
+                      placeholder="Example: 10022"
                     />
                   </div>
                   <div className="flex gap-4">
