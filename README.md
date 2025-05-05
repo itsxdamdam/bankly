@@ -20,5 +20,5 @@ displays transactions in real-time, allows users to transfer money to other plat
 - clone repository
 - change directory to repository
 - Install all dependencies, _"npm install"_
-- Set up Environment Variables ".env" file
+- Set up Environment Variables ".env" file, copy and update _".env.example"_ file
 - _"npm run dev"_ to start application
