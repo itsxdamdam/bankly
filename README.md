@@ -7,6 +7,7 @@ displays transactions in real-time, allows users to transfer money to other plat
 - TypeScript
 - Appwrite
 - Plaid
+- Stripe
 - Dwolla
 - React Hook Form
 - Zod
