@@ -90,10 +90,10 @@ const AuthForm = ({ type }: { type: string }) => {
         </Link>
 
         <div className="flex flex-col gap-1 md:gap-3">
-          <p className="text-[18px] font-bold">
+          <p className="text-[18px]">
             {" "}
-            test credentials: <br />
-            email: maryjane@yahoo.com <br /> password: Maryjane{" "}
+            plaid credentials: <br />
+            username: user_good <br /> password: pass_good{" "}
           </p>
           <h1 className="text-24 lg:text-36 font-bold text-gray-900">
             {user ? "Link Account" : type === "sign-in" ? "Sign In" : "Sign Up"}
@@ -149,7 +149,7 @@ const AuthForm = ({ type }: { type: string }) => {
                       name="state"
                       control={form.control}
                       label="State"
-                      placeholder="Example: Lagos"
+                      placeholder="Example: New York or US only"
                     />
                     <CustomInput
                       name="postalCode"
