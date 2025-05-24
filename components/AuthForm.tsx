@@ -90,11 +90,6 @@ const AuthForm = ({ type }: { type: string }) => {
         </Link>
 
         <div className="flex flex-col gap-1 md:gap-3">
-          <p className="text-[18px]">
-            {" "}
-            plaid test credentials: <br />
-            username: user_good <br /> password: pass_good{" "}
-          </p>
           <h1 className="text-24 lg:text-36 font-bold text-gray-900">
             {user ? "Link Account" : type === "sign-in" ? "Sign In" : "Sign Up"}
 
