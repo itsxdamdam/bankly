@@ -53,8 +53,12 @@ export const signIn = async ({ email, password }: signInProps) => {
     const user = await getUserInfo({ userId: session.userId });
 
     return parseStringify(user);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 401) {
+      throw new Error("Invalid credentials, Please check email and password");
+    }
     console.error("Error", error);
+    throw error;
   }
 };
 
