@@ -105,7 +105,10 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
     });
 
     return parseStringify(newUser);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 409) {
+      throw new Error("Email already in use. Please try signing in.");
+    }
     console.error("Error", error);
 
     // re-throw error so it can be caught in Authform
