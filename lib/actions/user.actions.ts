@@ -116,7 +116,8 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
     console.error("Error", error);
 
     // re-throw error so it can be caught in Authform
-    throw error;
+
+    return error;
   }
 };
 
