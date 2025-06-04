@@ -21,6 +21,7 @@ const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const formSchema = authFormSchema(type);
 
@@ -66,8 +67,9 @@ const AuthForm = ({ type }: { type: string }) => {
         });
         if (response) router.push("/");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      console.log("Error here", error);
+      setError(error.message || "Please check input fields properly");
     } finally {
       setIsLoading(false);
     }
@@ -144,7 +146,7 @@ const AuthForm = ({ type }: { type: string }) => {
                       name="state"
                       control={form.control}
                       label="State"
-                      placeholder="Example: New York or US only"
+                      placeholder="Example: NY"
                     />
                     <CustomInput
                       name="postalCode"
@@ -183,6 +185,7 @@ const AuthForm = ({ type }: { type: string }) => {
               />
 
               <div className="flex flex-col gap-4">
+                {error && <p className="text-red-600">{error}</p>}
                 <Button type="submit" className="form-btn" disabled={isLoading}>
                   {isLoading ? (
                     <>
@@ -196,6 +199,7 @@ const AuthForm = ({ type }: { type: string }) => {
                   )}
                 </Button>
               </div>
+              <p>{user}</p>
             </form>
           </Form>
 

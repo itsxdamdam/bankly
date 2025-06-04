@@ -107,6 +107,9 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
     return parseStringify(newUser);
   } catch (error) {
     console.error("Error", error);
+
+    // re-throw error so it can be caught in Authform
+    throw error;
   }
 };
 
