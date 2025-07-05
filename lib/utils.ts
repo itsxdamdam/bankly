@@ -195,6 +195,8 @@ export const getTransactionStatus = (date: Date) => {
   return date > twoDaysAgo ? "Processing" : "Success";
 };
 
+const MIN_AGE = 18;
+
 export const authFormSchema = (type: string) =>
   z.object({
     // sign up
@@ -206,8 +208,34 @@ export const authFormSchema = (type: string) =>
       type === "sign-in" ? z.string().optional() : z.string().min(2).max(2),
     postalCode:
       type === "sign-in" ? z.string().optional() : z.string().min(5).max(5),
-    dateOfBirth: type === "sign-in" ? z.string().optional() : z.string().min(3),
-    ssn: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    dateOfBirth:
+      type === "sign-in"
+        ? z.string().optional()
+        : z.string().refine(
+            (val) => {
+              const dob = new Date(val);
+              if (isNaN(dob.getTime())) return false;
+
+              const now = new Date();
+
+              if (dob > now) return false;
+
+              const age = now.getFullYear() - dob.getFullYear();
+              const monthDiff = now.getMonth() - dob.getMonth();
+              const dayDiff = now.getDate() - dob.getDate();
+
+              const hasMinAge =
+                age > MIN_AGE ||
+                (age === MIN_AGE &&
+                  (monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0)));
+
+              return hasMinAge;
+            },
+            {
+              message: `Enter a valid date. You must be at least ${MIN_AGE} years old.`,
+            }
+          ),
+    ssn: type === "sign-in" ? z.string().optional() : z.string().min(3).max(9),
     // both
     email: z.string().email(),
     password: z.string().min(8),

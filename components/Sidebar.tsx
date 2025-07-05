@@ -12,7 +12,7 @@ import PlaidLink from "./PlaidLink";
 const Sidebar = ({ user }: SiderbarProps) => {
   const pathname = usePathname();
   return (
-    <section className="sidebar">
+    <section className="sidebar hidden">
       <nav className="flex flex-col gap-4">
         <Link href="/" className="mb-12 cursor-pointer flex items-center gap-2">
           <Image
@@ -27,6 +27,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
         {sidebarLinks.map((item) => {
           const isActive =
             pathname === item.route || pathname.startsWith(`${item.route}/`);
+            console.log(item.route)
           return (
             <Link
               href={item.route}

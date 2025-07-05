@@ -4,7 +4,6 @@ import RightSidebar from "@/components/RightSidebar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import React from "react";
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const currentPage = Number(page as string) || 1;
@@ -31,7 +30,6 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
             user={loggedIn?.firstName || "Guest"}
             subtext="Access, manage yoour accounts and transactions efficiently"
           />
-
           <TotalBalanceBox
             accounts={accountsData}
             totalBanks={accounts?.totalBanks}

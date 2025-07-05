@@ -57,7 +57,7 @@ const AuthForm = ({ type }: { type: string }) => {
         };
 
         const newUser = await signUp(userData);
-        
+
         setUser(newUser);
       }
 
@@ -68,8 +68,7 @@ const AuthForm = ({ type }: { type: string }) => {
         });
         if (response) router.push("/");
       }
-    } catch (error:any) {
-      console.log("Error here", error);
+    } catch (error: any) {
       setError(error.message || "Please check input fields properly");
     } finally {
       setIsLoading(false);
